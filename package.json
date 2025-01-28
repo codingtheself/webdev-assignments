@@ -1,0 +1,28 @@
+{
+  "name": "webdev-assignments",
+  "version": "1.0.0",
+  "description": "all assingments on web dev and Javascripts here",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node index.js",
+    "assign02": "cd Module01-NodeJS/ && node todo-cli.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codingtheself/webdev-assignments.git"
+  },
+  "keywords": [
+    "JS",
+    "webdev",
+    "assignments"
+  ],
+  "author": "Sourav Yadav",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/codingtheself/webdev-assignments/issues"
+  },
+  "homepage": "https://github.com/codingtheself/webdev-assignments#readme",
+  "dependencies": {
+    "commander": "^13.1.0"
+  }
+}
