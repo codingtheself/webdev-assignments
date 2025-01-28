@@ -1,6 +1,9 @@
 
-const fs = require('fs');
+const chalk = new (require('chalk').Chalk);
+
 const { Command } = require('commander');
+const fs = require('fs');
+
 
 let filepath = new Date()
                         .toLocaleDateString()
@@ -25,7 +28,7 @@ function addTasks(newTask) {
         if (err) {
             console.log(err);
         } else {
-            console.log(`Tasked Added!`);
+            console.log(chalk.green("Tasked Added!"));
         }
         });
     } else {
@@ -39,7 +42,7 @@ function addTasks(newTask) {
         if (err) {
             console.log(err);
         } else {
-            console.log(`Task Added!`);
+            console.log(chalk.green("Tasked Added!"));
         }
         });
     }
@@ -55,15 +58,26 @@ function showTasks() {
         taskJson = JSON.parse(taskJson);
 
         let task_lists = taskJson.pending;
+        let task_completed = taskJson.completed;
 
-        console.log("Your Today's Tasks are: ");
-        console.log("----------------------------");
+        console.log(chalk.bold("Your Today's Tasks are: "));
+        console.log(chalk.dim("----------------------------\n"));
         
         for(var i = 0; i < task_lists.length; ++i) {
-            console.log(`${i + 1} -> ${task_lists[i]}`);
+            console.log(chalk.yellow(`${i + 1} -> ${task_lists[i]}`));
+        }
+
+        console.log(chalk.dim("\n----------------------------\n"));
+
+        console.log(chalk.bold('Tasks you have Completed:'));
+
+        console.log(chalk.dim("----------------------------"));
+
+        for(var i = 0; i < task_completed.length; ++i){
+            console.log(chalk.magenta.strikethrough(`-> ${task_completed[i]}`));
         }
         
-        console.log("----------------------------");
+        console.log(chalk.dim("----------------------------"));
     }
 }
 
@@ -82,12 +96,31 @@ function deleteTask(taskNum) {
         if(err)
             console.log(err);
         else
-            console.log("Task Deleted!");
+            console.log(chalk.green("Task "+ chalk.red("Deleted!")));
       });
       
     }
 
     
+}
+
+function doneTask(taskNum) {
+    const taskJson = {};
+
+    if (fs.existsSync(filepath)) {
+      let taskJson = fs.readFileSync(filepath);
+
+      taskJson = JSON.parse(taskJson);
+
+      let popped = taskJson.pending.pop(taskNum - 1);
+
+      taskJson.completed.push(popped);
+
+      fs.writeFile(filepath, JSON.stringify(taskJson), (err) => {
+        if (err) console.log(err);
+        else console.log(chalk.green("Congrats, 1 Task Done!"));
+      });
+    }
 }
 
 const program = new Command();
@@ -121,6 +154,18 @@ program
   .argument("<int>", "the task number in the list")
   .action((taskNum) => {
     deleteTask(taskNum);
+  });
+
+// command for completing the task
+
+program
+  .command("done")
+  .description(
+    "mark a task as done or completed"
+  )
+  .argument("<int>", "the task number in the list")
+  .action((taskNum) => {
+    doneTask(taskNum);
   });
 
 program.parse();

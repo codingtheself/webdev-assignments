@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/codingtheself/webdev-assignments#readme",
   "dependencies": {
+    "chalk": "^5.4.1",
     "commander": "^13.1.0"
   }
 }
