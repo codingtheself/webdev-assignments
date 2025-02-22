@@ -1,9 +1,26 @@
+const { exit } = require('process');
 const readline = require('readline'); // for reading input
 
+function guess(guessNum) {
 
-function guess() {
+    let num = Math.floor(Math.random() * 11);
 
-    let input = readline.createInterface({
+    console.log(`${num} was answer`);
+
+    if(parseInt(guessNum) == num) {
+        console.log("Congrats, you won!");
+        exit(0);
+        
+    } else {
+        console.log("Wrong!");
+        takeInput();
+    }
+
+}
+
+function takeInput() {
+
+    const input = readline.createInterface({
         input: process.stdin,
         output: process.stdout
     });
@@ -11,25 +28,13 @@ function guess() {
     input.question("Guess the number between 1-10 or q for quit: ", (ans) => {
         if(ans == "q") {
             console.log("bye!");
-            return input.close();
-            
+            input.close();
+            process.exit(0);
         }
 
-        let num = Math.floor(Math.random() * 11);
-
-        console.log(`${num} is the hinted num`);
-
-        if(parseInt(ans) == num) {
-            console.log("Congrats, you won!");
-            return input.close();
-            
-        } else {
-            console.log("Wrong!");
-            guess();
-        }
-
+        input.close();
+        guess(ans);
     });
 }
 
-
-guess();
+takeInput();
