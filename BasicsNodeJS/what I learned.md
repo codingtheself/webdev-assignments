@@ -19,3 +19,8 @@ and then, keep calling the function for taking input separately.
 So, I created a function *takeInput()* which will take input and also ensure that the process is close everything after it's done and returns the input from the user to *guess(guessNum)*.
 
 
+## Quoter.js
+
+about `quoter.js`, I am trying to fetch the json data from the API [https://zenquotes.io/api/random](https://zenquotes.io/api/random).
+
+I am trying to use `http` module but it is not working for some reasons. Well, I will figure it out later
